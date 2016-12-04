@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>sin/cos Calculator</title>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width,initial-scale=1' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="root">
+    </div>
+    <h1>
+      Calculate sin(x) and cos(x)
+    </h1>
+    <input id="input" type='text' placeholder='Enter degrees' value='0' />
+    <button type="button" onclick="submit()">
+      Calculate
+    </button>
+    <h2>Results</h2>
+    <pre id="result"></pre>
+    <h2>Formulas</h2>
+    <div id="formula-sin"></div>
+    <br />
+    <div id="formula-cos"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobx/2.6.4/mobx.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobx-react/4.0.3/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+    <script src="app.js" type="text/babel" data-plugins="transform-decorators-legacy,transform-class-properties" ></script>
+  </body>
+</html>
