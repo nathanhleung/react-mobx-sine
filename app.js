@@ -1,5 +1,7 @@
 (() => {
-  const { observable, computed, observer } = mobx;
+  const { Component, PropTypes } = React;
+  const { observable, computed } = mobx;
+  const { observer } = mobxReact;
 
   class AppStore {
     @observable value = '';
@@ -13,6 +15,12 @@
     }
 
     calculate(func) {
+      function factorial(n) {
+    		if (n === 0) {
+    	  	return 1;
+    	  }
+    	  return n * factorial(n - 1);
+    	}
   	  const radians = this.degrees / (180 / Math.PI);
   	  let res = 0;
   	  // 100 is big enough without overflowing Number type
@@ -40,50 +48,69 @@
       return this.calculate('cos');
     }
 
-    report() {
+    @computed get report() {
       if (isNaN(this.degrees)) {
-  	    return 'Please enter a number';
+  	    return {
+          type: 'ERROR',
+          message: 'Please enter a valid number.',
+        }
   	  }
-      let resultString = '';
-	    resultString += `sin(${this.degrees}) = ${this.sin}\n`;
-	    resultString += `cos(${this.degrees}) = ${this.cos}`;
-      return resultString;
-    }
-
-    changeValue(newValue) {
-      this.value = newValue;
+      return {
+        type: 'SUCCESS',
+        // return this.value because this.degrees has modulo 360 applied
+        sin: `sin(${this.value || '0'}°) = ${this.sin}`,
+        cos: `cos(${this.value || '0'}°) = ${this.cos}`,
+      };
     }
   }
 
   const appStore = new AppStore();
 
   @observer
-  class App extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        value: '',
-      };
-    }
+  class App extends Component {
+    static propTypes = {
+      store: PropTypes.object,
+    };
+
     onChange(e) {
-      console.log(e);
+      this.props.store.value = e.target.value;
     }
     render() {
       const store = this.props.store;
+      let body;
+      if (store.report.type === 'ERROR') {
+        body = (
+          <span>{store.report.message}</span>
+        );
+      } else {
+        body = (
+          <div className='app--results'>
+            <h2>{store.report.sin}</h2>
+            <h2>{store.report.cos}</h2>
+          </div>
+        );
+      }
       return (
-        <div>
+        <div className="app">
+          <h1>Approximate sin(x) and cos(x)</h1>
+          <p>(using calculus, React, and MobX!)</p>
           <input
+            className="app--input"
             type='text'
-            placeholder='Enter degress'
-            value={this.state.value}
+            placeholder='Enter degrees'
+            value={store.value}
             onChange={(e) => this.onChange(e)}
           />
-          {store.report}
+          <br />
+          <br />
+          <div>
+            {body}
+          </div>
         </div>
       );
     }
   }
 
   const root = document.getElementById('root');
-  ReactDOM.render(<App />, root);
+  ReactDOM.render(<App store={appStore} />, root);
 })();

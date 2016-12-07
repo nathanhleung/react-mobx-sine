@@ -1,4 +1,65 @@
+html {
+  min-height: 100%;
+}
+
 body {
-  background: '#eee';
-  padding: 100px;
+  /* subtract padding */
+  height: calc(100% - 100px);
+  background: linear-gradient(
+    0deg,
+    #f857a6,
+    #ff5858
+  );
+  padding: 50px;
+  font-family: 'Open Sans';
+  font-weight: 300;
+  color: #eee;
+  text-align: center;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 300;
+}
+
+.app--input {
+  font-family: 'Open Sans';
+  font-weight: 300;
+  text-align: center;
+  border: none;
+  padding: 1.2rem;
+  font-size: 3rem;
+  margin: 30px;
+  width: 25rem;
+  color: #333;
+}
+
+.app--input:focus {
+  border: none;
+  outline: none;
+}
+
+.app--results h2 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+#github {
+  padding-top: 50px;
+}
+
+#github span {
+  display: inline-block;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+#github a {
+  text-decoration: none;
+  font-weight: 400;
+  color: #fff;
+}
+
+#github a:hover {
+  text-decoration: underline;
 }
